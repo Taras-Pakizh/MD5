@@ -42,9 +42,7 @@ namespace SD_Lab2.Hash
         private void _CreateWords(ulong bitLength, byte[] byteMessage, byte[] additiveBytes)
         {
             var lengthBytes = BitConverter.GetBytes(bitLength);
-
-            //int index = 0;
-
+            
             byte[] buffer = new byte[4];
 
             _Words = new uint[(byteMessage.Length + additiveBytes.Length + lengthBytes.Length) / 4];
@@ -63,29 +61,6 @@ namespace SD_Lab2.Hash
 
                 _Words[i] = BitConverter.ToUInt32(buffer, 0);
             }
-
-            //for (; index < byteMessage.Length / 4; ++index)
-            //{
-            //    Array.Copy(byteMessage, index * 4, buffer, 0, buffer.Length);
-
-            //    _Words[index] = BitConverter.ToUInt32(buffer, 0);
-            //}
-
-            //for (; index < additiveBytes.Length / 4; ++index)
-            //{
-            //    Array.Copy(additiveBytes, (index - (byteMessage.Length / 4)) * 4,
-            //        buffer, 0, buffer.Length);
-
-            //    _Words[index] = BitConverter.ToUInt32(buffer, 0);
-            //}
-
-            //for (; index < lengthBytes.Length / 4; ++index)
-            //{
-            //    Array.Copy(lengthBytes, (index - ((byteMessage.Length + additiveBytes.Length) / 4)) * 4,
-            //        buffer, 0, buffer.Length);
-
-            //    _Words[index] = BitConverter.ToUInt32(buffer, 0);
-            //}
         }
 
         public IEnumerator<uint[]> GetEnumerator()
