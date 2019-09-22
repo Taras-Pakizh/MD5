@@ -43,49 +43,49 @@ namespace SD_Lab2.Hash
         {
             var lengthBytes = BitConverter.GetBytes(bitLength);
 
-            int index = 0;
+            //int index = 0;
 
             byte[] buffer = new byte[4];
 
             _Words = new uint[(byteMessage.Length + additiveBytes.Length + lengthBytes.Length) / 4];
 
-            //var wholeMessageList = new List<byte>();
+            var wholeMessageList = new List<byte>();
 
-            //wholeMessageList.AddRange(byteMessage);
-            //wholeMessageList.AddRange(additiveBytes);
-            //wholeMessageList.AddRange(lengthBytes);
+            wholeMessageList.AddRange(byteMessage);
+            wholeMessageList.AddRange(additiveBytes);
+            wholeMessageList.AddRange(lengthBytes);
 
-            //var wholeMessage = wholeMessageList.ToArray();
+            var wholeMessage = wholeMessageList.ToArray();
 
-            //for(int i = 0; i < wholeMessage.Length / 4; ++i)
+            for (int i = 0; i < wholeMessage.Length / 4; ++i)
+            {
+                Array.Copy(wholeMessage, i * 4, buffer, 0, buffer.Length);
+
+                _Words[i] = BitConverter.ToUInt32(buffer, 0);
+            }
+
+            //for (; index < byteMessage.Length / 4; ++index)
             //{
-            //    Array.Copy(wholeMessage, i * 4, buffer, 0, buffer.Length);
+            //    Array.Copy(byteMessage, index * 4, buffer, 0, buffer.Length);
 
             //    _Words[index] = BitConverter.ToUInt32(buffer, 0);
             //}
 
-            for (; index < byteMessage.Length / 4; ++index)
-            {
-                Array.Copy(byteMessage, index * 4, buffer, 0, buffer.Length);
+            //for (; index < additiveBytes.Length / 4; ++index)
+            //{
+            //    Array.Copy(additiveBytes, (index - (byteMessage.Length / 4)) * 4,
+            //        buffer, 0, buffer.Length);
 
-                _Words[index] = BitConverter.ToUInt32(buffer, 0);
-            }
+            //    _Words[index] = BitConverter.ToUInt32(buffer, 0);
+            //}
 
-            for (; index < additiveBytes.Length / 4; ++index)
-            {
-                Array.Copy(additiveBytes, (index - (byteMessage.Length / 4)) * 4,
-                    buffer, 0, buffer.Length);
+            //for (; index < lengthBytes.Length / 4; ++index)
+            //{
+            //    Array.Copy(lengthBytes, (index - ((byteMessage.Length + additiveBytes.Length) / 4)) * 4,
+            //        buffer, 0, buffer.Length);
 
-                _Words[index] = BitConverter.ToUInt32(buffer, 0);
-            }
-
-            for (; index < lengthBytes.Length / 4; ++index)
-            {
-                Array.Copy(lengthBytes, (index - ((byteMessage.Length + additiveBytes.Length) / 4)) * 4,
-                    buffer, 0, buffer.Length);
-
-                _Words[index] = BitConverter.ToUInt32(buffer, 0);
-            }
+            //    _Words[index] = BitConverter.ToUInt32(buffer, 0);
+            //}
         }
 
         public IEnumerator<uint[]> GetEnumerator()

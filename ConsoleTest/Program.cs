@@ -14,7 +14,7 @@ namespace ConsoleTest
 
             var hash = new MD5();
 
-            var result = hash.GetHash("a");
+            var result = hash.GetHash("12345678901234567890123456789012345678901234567890123456789012345678901234567890");
 
             Console.WriteLine(BitConverter.ToString(result).Replace("-", ""));
 
